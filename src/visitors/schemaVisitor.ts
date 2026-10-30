@@ -43,7 +43,8 @@ export function getSchemaVisitor() {
         visitNumberType(node) {
             if (['u64', 'u128'].includes(node.format)) return { pattern: '^[0-9]+$', type: 'string' };
             if (['i64', 'i128'].includes(node.format)) return { pattern: '^-?[0-9]+$', type: 'string' };
-            // TODO: f32/f64 fall through here and are mistyped as 'integer' instead of 'number'
+            if (['f32'].includes(node.format)) return { format: 'float', type: 'number' };
+            if (['f64'].includes(node.format)) return { format: 'double', type: 'number' };
             return { type: 'integer' };
         },
         visitOptionType(node, { self }) {
