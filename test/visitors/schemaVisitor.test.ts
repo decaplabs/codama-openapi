@@ -81,6 +81,11 @@ test('it maps small number types to a plain integer', () => {
     expect(visit(numberTypeNode('i32'), getSchemaVisitor())).toEqual({ type: 'integer' });
 });
 
+test('it maps f32/f64 number types to a plain number', () => {
+    expect(visit(numberTypeNode('f32'), getSchemaVisitor())).toEqual({ format: 'float', type: 'number' });
+    expect(visit(numberTypeNode('f64'), getSchemaVisitor())).toEqual({ format: 'double', type: 'number' });
+});
+
 test('it maps a boolean type', () => {
     expect(visit(booleanTypeNode(), getSchemaVisitor())).toEqual({ type: 'boolean' });
 });
